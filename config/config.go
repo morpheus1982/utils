@@ -4,6 +4,7 @@ import (
 	"log"
 	"path/filepath"
 
+	"github.com/morpheus1982/utils/db"
 	"github.com/morpheus1982/utils/debug"
 	"github.com/morpheus1982/utils/logger"
 
@@ -13,6 +14,7 @@ import (
 type Config struct {
 	Logger logger.Config `toml:"logger" json:"logger"`
 	Debug  debug.Config  `toml:"debug" json:"debug"`
+	Mysql  db.Mysql      `toml:"mysql" json:"mysql"`
 }
 
 var Cfg *Config
@@ -39,4 +41,3 @@ func LoadConfig(configFile string) error {
 
 	return nil
 }
-
