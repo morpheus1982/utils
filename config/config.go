@@ -1,7 +1,6 @@
 package config
 
 import (
-	"log"
 	"path/filepath"
 
 	"github.com/morpheus1982/utils/db"
@@ -27,7 +26,6 @@ func LoadConfig(configFile string) error {
 
 	cfg := &Config{}
 
-	log.Println("Parse config file! path: ", filePath)
 	tree, err := toml.LoadFile(filePath)
 	if err != nil {
 		return err
