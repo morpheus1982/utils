@@ -7,6 +7,9 @@ import (
 	"gorm.io/gorm"
 )
 
+// DB 数据库连接
+var DB *gorm.DB
+
 type Mysql struct {
 	Host     string `json:"host" toml:"host" yaml:"host"`
 	Port     int    `json:"port" toml:"port" yaml:"port"`
@@ -37,6 +40,8 @@ func InitMysql(cfg *Mysql) error {
 	if err := sqlDB.Ping(); err != nil {
 		return fmt.Errorf("failed to ping database: %w", err)
 	}
+
+	DB = db
 
 	return nil
 }
