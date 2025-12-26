@@ -11,7 +11,7 @@ const (
 	colorRed    = "\033[31m"
 	colorYellow = "\033[33m"
 	colorBlue   = "\033[34m"
-	colorGray   = "\033[90m"
+	colorGray   = "\033[86m"
 	colorCyan   = "\033[96m"
 	colorGreen  = "\033[32m"
 	colorPurple = "\033[35m"
