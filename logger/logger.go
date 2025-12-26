@@ -115,7 +115,7 @@ func initConsoleLogger(level zap.AtomicLevel) (core zapcore.Core, err error) {
 	encoderConfig.EncodeTime = timeEncoder
 	encoderConfig.EncodeCaller = zapcore.ShortCallerEncoder
 
-	return zapcore.NewCore(zapcore.NewConsoleEncoder(encoderConfig), output, level), nil
+	return zapcore.NewCore(newColoredConsoleEncoder(encoderConfig), output, level), nil
 }
 
 func initFileLogger(cfg *Config, level zap.AtomicLevel) (core zapcore.Core, err error) {
@@ -175,4 +175,14 @@ func initAccessFileLogger(cfg *AccessConfig, level zap.AtomicLevel) (core zapcor
 func timeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
 	s := t.Format("2006/01/02 15:04:05.000")
 	enc.AppendString(s)
+}
+
+// GetLogger 返回错误日志实例
+func GetLogger() *zap.Logger {
+	return elg
+}
+
+// GetAccessLogger 返回访问日志实例
+func GetAccessLogger() *zap.Logger {
+	return alg
 }
