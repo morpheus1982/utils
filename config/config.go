@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"path/filepath"
 
 	"github.com/morpheus1982/utils/db"
@@ -8,12 +9,45 @@ import (
 	"github.com/morpheus1982/utils/logger"
 
 	"github.com/pelletier/go-toml"
+	"golang.org/x/net/proxy"
 )
+
+// Socks5Config SOCKS5代理配置
+type Socks5Config struct {
+	Enabled  bool   `toml:"enabled" json:"enabled"`   // 是否启用代理
+	Host     string `toml:"host" json:"host"`         // 代理服务器地址
+	Port     int    `toml:"port" json:"port"`         // 代理服务器端口
+	Username string `toml:"username" json:"username"` // 用户名（可选）
+	Password string `toml:"password" json:"password"` // 密码（可选）
+}
+
+// Address 返回代理地址 host:port
+func (s *Socks5Config) Address() string {
+	return fmt.Sprintf("%s:%d", s.Host, s.Port)
+}
+
+// Dialer 返回 SOCKS5 代理拨号器
+func (s *Socks5Config) Dialer() (proxy.Dialer, error) {
+	if !s.Enabled {
+		return proxy.Direct, nil
+	}
+
+	var auth *proxy.Auth
+	if s.Username != "" {
+		auth = &proxy.Auth{
+			User:     s.Username,
+			Password: s.Password,
+		}
+	}
+
+	return proxy.SOCKS5("tcp", s.Address(), auth, proxy.Direct)
+}
 
 type Config struct {
 	Logger logger.Config `toml:"logger" json:"logger"`
 	Debug  debug.Config  `toml:"debug" json:"debug"`
 	Mysql  db.Mysql      `toml:"mysql" json:"mysql"`
+	Socks5 Socks5Config  `toml:"socks5" json:"socks5"`
 }
 
 var Cfg *Config
