@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"path/filepath"
+	"time"
 
 	"github.com/morpheus1982/utils/db"
 	"github.com/morpheus1982/utils/debug"
@@ -43,11 +44,28 @@ func (s *Socks5Config) Dialer() (proxy.Dialer, error) {
 	return proxy.SOCKS5("tcp", s.Address(), auth, proxy.Direct)
 }
 
+// ReaderConfig reader 服务配置
+type ReaderConfig struct {
+	Port              int `toml:"port"`
+	TaskTimeout       int `toml:"task_timeout"`
+	MaxConcurrentTasks int `toml:"max_concurrent_tasks"`
+	LogRetentionDays  int `toml:"log_retention_days"`
+}
+
+// GetTimeout 获取超时时间
+func (c *ReaderConfig) GetTimeout() time.Duration {
+	if c.TaskTimeout <= 0 {
+		return 10 * time.Minute
+	}
+	return time.Duration(c.TaskTimeout) * time.Second
+}
+
 type Config struct {
 	Logger logger.Config `toml:"logger" json:"logger"`
 	Debug  debug.Config  `toml:"debug" json:"debug"`
 	Mysql  db.Mysql      `toml:"mysql" json:"mysql"`
 	Socks5 Socks5Config  `toml:"socks5" json:"socks5"`
+	Reader ReaderConfig  `toml:"reader" json:"reader"`
 }
 
 var Cfg *Config
