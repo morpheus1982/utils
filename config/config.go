@@ -60,12 +60,18 @@ func (c *ReaderConfig) GetTimeout() time.Duration {
 	return time.Duration(c.TaskTimeout) * time.Second
 }
 
+// OfficialConfig official 服务配置
+type OfficialConfig struct {
+	Port string `toml:"port"` // HTTP 服务端口
+}
+
 type Config struct {
-	Logger logger.Config `toml:"logger" json:"logger"`
-	Debug  debug.Config  `toml:"debug" json:"debug"`
-	Mysql  db.Mysql      `toml:"mysql" json:"mysql"`
-	Socks5 Socks5Config  `toml:"socks5" json:"socks5"`
-	Reader ReaderConfig  `toml:"reader" json:"reader"`
+	Logger   logger.Config  `toml:"logger" json:"logger"`
+	Debug    debug.Config   `toml:"debug" json:"debug"`
+	Mysql    db.Mysql       `toml:"mysql" json:"mysql"`
+	Socks5   Socks5Config   `toml:"socks5" json:"socks5"`
+	Reader   ReaderConfig   `toml:"reader" json:"reader"`
+	Official OfficialConfig `toml:"official" json:"official"`
 }
 
 var Cfg *Config
