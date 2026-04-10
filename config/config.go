@@ -70,6 +70,11 @@ type ArticlesConfig struct {
 	Port int `toml:"port"` // HTTP 服务端口
 }
 
+// WebConfig web 服务配置
+type WebConfig struct {
+	Port int `toml:"port"` // HTTP 服务端口
+}
+
 type Config struct {
 	Logger   logger.Config  `toml:"logger" json:"logger"`
 	Debug    debug.Config   `toml:"debug" json:"debug"`
@@ -78,6 +83,7 @@ type Config struct {
 	Reader   ReaderConfig   `toml:"reader" json:"reader"`
 	Official OfficialConfig `toml:"official" json:"official"`
 	Articles ArticlesConfig `toml:"articles" json:"articles"`
+	Web      WebConfig      `toml:"web" json:"web"`
 }
 
 var Cfg *Config
