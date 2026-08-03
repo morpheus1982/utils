@@ -33,6 +33,9 @@ func Init(cfg *Config) error {
 	if cfg == nil {
 		return fmt.Errorf("db config is nil")
 	}
+	if cfg.Driver == "" {
+		return fmt.Errorf("db.Driver is empty — did you forget to rename [mysql] to [database] in config.toml? See docs/superpowers/specs/2026-08-03-psql-support-design.md")
+	}
 	dialector, err := buildDialector(cfg)
 	if err != nil {
 		return err
