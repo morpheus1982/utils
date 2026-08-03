@@ -78,7 +78,7 @@ type WebConfig struct {
 type Config struct {
 	Logger   logger.Config  `toml:"logger" json:"logger"`
 	Debug    debug.Config   `toml:"debug" json:"debug"`
-	Mysql    db.Mysql       `toml:"mysql" json:"mysql"`
+	Database db.Config       `toml:"database" json:"database"`
 	Socks5   Socks5Config   `toml:"socks5" json:"socks5"`
 	Reader   ReaderConfig   `toml:"reader" json:"reader"`
 	Official OfficialConfig `toml:"official" json:"official"`
